@@ -57,7 +57,7 @@ function AllUsers() {
       <h2 className="text-[16px] font-semibold m-2">Messages</h2>
       <ul>
         {users.map((user, index) => (
-          <li key={index} className="hover:bg-[#f3f3f3] m-2">
+          <li key={index} className="hover:bg-[#ededed] m-2 border rounded-sm border-[#dcdcdc] bg-[#f8f7f7]">
             <Link href={`/chat/${encodeURIComponent(user.username)}`}>
               <div className="flex gap-2 items-center px-2">
                 <div className="py-1">

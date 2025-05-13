@@ -114,13 +114,13 @@ const GeneralChat = () => {
         ))}
       </div>
 
-      <form onSubmit={sendMessage} className="flex items-center bg-white border-t border-gray-300 px-2 py-2">
+      <form onSubmit={sendMessage} className="flex items-center bg-white border-t border-gray-300 px-2 py-2 ">
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type a message..."
-          className="flex-grow p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#c9c9c9]"
+          className="flex-grow p-2 text-[#181818] rounded-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#c9c9c9]"
         />
         <button type="submit" className="ml-3 bg-[#47718a] text-white py-2 px-4 rounded-lg hover:bg-[#6a8da1] focus:outline-none focus:ring-2">
           Send

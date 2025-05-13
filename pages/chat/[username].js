@@ -67,7 +67,7 @@ export default function Chat() {
 
     set(messageRef, newMessage);
 
-   
+
     const lastMessageRef = ref(database, `LastMessages/${chatId}`);
     set(lastMessageRef, newMessage);
 
@@ -106,61 +106,60 @@ export default function Chat() {
           </h2>
           <div className="flex flex-col space-y-4 overflow-y-auto flex-grow px-4 h-[35vw] pt-3">
             {messages.map((msg, i) => {
-  const isSender = msg.sender === currentUser?.displayName;
-  const isSelected = selectedMessageKey === msg.key;
+              const isSender = msg.sender === currentUser?.displayName;
+              const isSelected = selectedMessageKey === msg.key;
 
-  return (
-    <div
-      key={i}
-      className={`mb-2 flex ${isSender ? "justify-end" : "justify-start"}`}
-      onClick={() =>
-        isSender
-          ? setSelectedMessageKey((prev) => (prev === msg.key ? null : msg.key))
-          : null
-      }
-    >
-      <div className={`flex flex-col items-${isSender ? "end" : "start"}`}>
-        <div
-          className={`max-w-xs px-4 py-1.5 rounded-lg cursor-pointer ${
-            isSender ? "bg-[#5290e8] text-white" : "bg-[#a6d0ea] text-black"
-          }`}
-        >
-          {editingKey === msg.key ? (
-            <input
-              value={editedText}
-              onChange={(e) => setEditedText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") saveEditedMessage(msg.key);
-              }}
-              className="bg-white text-black p-1 rounded w-full"
-              autoFocus
-            />
-          ) : (
-            <span>{msg.text}</span>
-          )}
-        </div>
-        <p className="text-[12px] text-gray-500 mt-1">{msg.sender}</p>
+              return (
+                <div
+                  key={i}
+                  className={`mb-2 flex ${isSender ? "justify-end" : "justify-start"}`}
+                  onClick={() =>
+                    isSender
+                      ? setSelectedMessageKey((prev) => (prev === msg.key ? null : msg.key))
+                      : null
+                  }
+                >
+                  <div className={`flex flex-col items-${isSender ? "end" : "start"}`}>
+                    <div
+                      className={`max-w-xs px-4 py-1.5 rounded-lg cursor-pointer ${isSender ? "bg-[#5290e8] text-white" : "bg-[#a6d0ea] text-black"
+                        }`}
+                    >
+                      {editingKey === msg.key ? (
+                        <input
+                          value={editedText}
+                          onChange={(e) => setEditedText(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") saveEditedMessage(msg.key);
+                          }}
+                          className="bg-white text-black p-1 rounded w-full"
+                          autoFocus
+                        />
+                      ) : (
+                        <span>{msg.text}</span>
+                      )}
+                    </div>
+                    <p className="text-[12px] text-gray-500 mt-1">{msg.sender}</p>
 
-        {/* Show edit/delete only when selected */}
-        {isSender && isSelected && (
-          <div className="flex gap-2 mt-1 text-[12px] text-blue-500">
-            {editingKey === msg.key ? (
-              <>
-                <button onClick={() => saveEditedMessage(msg.key)}>Save</button>
-                <button onClick={() => setEditingKey(null)} className="text-red-500">Cancel</button>
-              </>
-            ) : (
-              <>
-                <button onClick={() => startEditing(msg.key, msg.text)}>Edit</button>
-                <button onClick={() => deleteMessage(msg.key)} className="text-red-500">Delete</button>
-              </>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-})}
+                    {/* Show edit/delete only when selected */}
+                    {isSender && isSelected && (
+                      <div className="flex gap-2 mt-1 text-[12px] text-blue-500">
+                        {editingKey === msg.key ? (
+                          <>
+                            <button onClick={() => saveEditedMessage(msg.key)}>Save</button>
+                            <button onClick={() => setEditingKey(null)} className="text-red-500">Cancel</button>
+                          </>
+                        ) : (
+                          <>
+                            <button onClick={() => startEditing(msg.key, msg.text)}>Edit</button>
+                            <button onClick={() => deleteMessage(msg.key)} className="text-red-500">Delete</button>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
 
           </div>
 
@@ -177,7 +176,7 @@ export default function Chat() {
               value={messageInput}
               onChange={(e) => setMessageInput(e.target.value)}
               placeholder="Type a message..."
-              className="flex-grow p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#c9c9c9]"
+              className="flex-grow p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#c9c9c9] text-[#181818]"
             />
             <button
               type="submit"
