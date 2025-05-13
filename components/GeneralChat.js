@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ref, set, push, onValue, update, remove } from 'firebase/database';
 import { database, auth } from '../firebase';
 import { useRouter } from 'next/router';
+import '../src/app/globals.css'
 
 const GeneralChat = () => {
   const [message, setMessage] = useState('');

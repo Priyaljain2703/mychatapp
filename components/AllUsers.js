@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { database, auth } from "../firebase";
 import { ref, onValue } from "firebase/database";
 import Link from "next/link";
+import '../src/app/globals.css'
 
 function AllUsers() {
   const [users, setUsers] = useState([]);

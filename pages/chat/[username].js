@@ -5,6 +5,7 @@ import { ref, onValue, set, remove, update } from "firebase/database";
 import { format } from "date-fns";
 import Navbar from "../../components/Navbar";
 import AllUsers from "../../components/AllUsers";
+import '../../src/app/globals.css'
 
 export default function Chat() {
   const router = useRouter();

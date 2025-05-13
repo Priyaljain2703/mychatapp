@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import GeneralChat from '../components/GeneralChat'
 import AllUsers from '../components/AllUsers'
+import '../src/app/globals.css'
 
 function Homepage() {
   return (
