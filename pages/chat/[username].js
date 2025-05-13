@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { database, auth } from "../../firebase";
 import { ref, onValue, set, remove, update } from "firebase/database";
 import { format } from "date-fns";
 import Navbar from "../../components/Navbar";
 import AllUsers from "../../components/AllUsers";
-import '../../src/app/globals.css'
+import "../../src/app/globals.css";
 
 export default function Chat() {
   const router = useRouter();
@@ -17,6 +17,8 @@ export default function Chat() {
   const [editedText, setEditedText] = useState("");
   const [selectedMessageKey, setSelectedMessageKey] = useState(null);
 
+ 
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -47,9 +49,11 @@ export default function Chat() {
     });
   }, [username, currentUser]);
 
+ 
   const getChatId = (user1, user2) => {
     return [user1, user2].sort().join("_");
   };
+
 
   const sendMessage = () => {
     if (!messageInput.trim()) return;
@@ -67,12 +71,12 @@ export default function Chat() {
 
     set(messageRef, newMessage);
 
-
     const lastMessageRef = ref(database, `LastMessages/${chatId}`);
     set(lastMessageRef, newMessage);
 
     setMessageInput("");
   };
+
 
   const deleteMessage = (key) => {
     const chatId = getChatId(currentUser.displayName, username);
@@ -80,11 +84,13 @@ export default function Chat() {
     remove(msgRef);
   };
 
+
   const startEditing = (key, currentText) => {
     setEditingKey(key);
     setEditedText(currentText);
   };
 
+  
   const saveEditedMessage = (key) => {
     if (!editedText.trim()) return;
     const chatId = getChatId(currentUser.displayName, username);
@@ -94,6 +100,14 @@ export default function Chat() {
     setEditingKey(null);
     setEditedText("");
   };
+
+  
+  useEffect(() => {
+    
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "auto", block: "end" });
+    }
+  }, [messages]);
 
   return (
     <div className="h-screen w-full flex items-center justify-center bg-gradient-to-tl to-[#a2c0db] from-[#eab9da]">
@@ -140,7 +154,6 @@ export default function Chat() {
                     </div>
                     <p className="text-[12px] text-gray-500 mt-1">{msg.sender}</p>
 
-                    {/* Show edit/delete only when selected */}
                     {isSender && isSelected && (
                       <div className="flex gap-2 mt-1 text-[12px] text-blue-500">
                         {editingKey === msg.key ? (
@@ -160,10 +173,10 @@ export default function Chat() {
                 </div>
               );
             })}
-
+           
+            <div ref={messagesEndRef} />
           </div>
 
-          {/* Message Input */}
           <form
             onSubmit={(e) => {
               e.preventDefault();

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+import React, { useState, useEffect, useRef } from 'react';
 import { ref, set, push, onValue, update, remove } from 'firebase/database';
 import { database, auth } from '../firebase';
 import { useRouter } from 'next/router';
-import '../src/app/globals.css'
+import '../src/app/globals.css';
 
 const GeneralChat = () => {
   const [message, setMessage] = useState('');
@@ -12,6 +13,26 @@ const GeneralChat = () => {
   const [editedText, setEditedText] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(null);
   const router = useRouter();
+  const [initialLoadDone, setInitialLoadDone] = useState(false);
+
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
+    }
+  };
+
+  const handleScroll = () => {
+    const container = chatContainerRef.current;
+    if (container) {
+      if (container.scrollHeight - container.scrollTop === container.clientHeight) {
+        setIsTyping(false);
+      }
+    }
+  };
 
   useEffect(() => {
     const currentUser = auth.currentUser;
@@ -24,10 +45,27 @@ const GeneralChat = () => {
     const messagesRef = ref(database, 'messages');
     onValue(messagesRef, (snapshot) => {
       const data = snapshot.val();
-      const loadedMessages = Object.keys(data).map(id => ({ id, ...data[id] }));
-      setMessages(loadedMessages);
+      if (data) {
+        const loadedMessages = Object.keys(data)
+          .map(id => ({ id, ...data[id] }))
+          .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        setMessages(loadedMessages);
+      } else {
+        setMessages([]);
+      }
+
+      if (!initialLoadDone && !isTyping) {
+        setTimeout(() => scrollToBottom(), 0);
+        setInitialLoadDone(true);
+      }
     });
-  }, [router]);
+  }, [router, isTyping]);
+
+  useEffect(() => {
+    if (!isTyping && messages.length > 0) {
+      scrollToBottom();
+    }
+  }, [messages]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -65,17 +103,21 @@ const GeneralChat = () => {
   };
 
   return (
-    <div className='w-full'>
+    <div className='w-full h-full flex flex-col'>
       <h1 className='p-3 border-b-2 border-[#dcdcdc] font-semibold text-[#4d4d4d]'>General Chat</h1>
 
-      <div className="flex flex-col space-y-4 overflow-y-auto flex-grow px-4 h-[35vw] pt-3">
+      <div
+        ref={chatContainerRef}
+        onScroll={handleScroll}
+        className="flex flex-col space-y-4 overflow-y-auto px-4 pt-3 grow h-[calc(100vh-200px)]"
+      >
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex ${msg.user === user.displayName ? "justify-end" : "justify-start"}`}
+            className={`flex ${msg.user === user?.displayName ? "justify-end" : "justify-start"}`}
             onClick={() => setSelectedMessage(selectedMessage === msg.id ? null : msg.id)}
           >
-            {msg.user === user.displayName ? (
+            {msg.user === user?.displayName ? (
               <div className="flex flex-col items-end">
                 <div className="max-w-xs px-4 py-1.5 bg-[#5290e8] text-white rounded-lg">
                   {editingMessage === msg.id ? (
@@ -95,7 +137,7 @@ const GeneralChat = () => {
                 </div>
                 <p className="text-[12px] text-gray-500 mt-1">{msg.user}</p>
 
-                {msg.user === user.displayName && selectedMessage === msg.id && !editingMessage && (
+                {selectedMessage === msg.id && !editingMessage && (
                   <div className="flex gap-2 mt-1 text-[12px] text-blue-500">
                     <button onClick={() => startEditing(msg)}>Edit</button>
                     <button onClick={() => deleteMessage(msg.id)} className="text-red-500">Delete</button>
@@ -112,15 +154,19 @@ const GeneralChat = () => {
             )}
           </div>
         ))}
+
+        <div ref={messagesEndRef} />
       </div>
 
-      <form onSubmit={sendMessage} className="flex items-center bg-white border-t border-gray-300 px-2 py-2 ">
+      <form onSubmit={sendMessage} className="flex items-center bg-white border-t border-gray-300 px-2 py-2">
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onFocus={() => setIsTyping(true)}
+          onBlur={() => setIsTyping(false)}
           placeholder="Type a message..."
-          className="flex-grow p-2 text-[#181818] rounded-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#c9c9c9]"
+          className="flex-grow p-2 text-[#272727] rounded-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#c9c9c9]"
         />
         <button type="submit" className="ml-3 bg-[#47718a] text-white py-2 px-4 rounded-lg hover:bg-[#6a8da1] focus:outline-none focus:ring-2">
           Send
