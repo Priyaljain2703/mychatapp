@@ -13,7 +13,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [loading, setLoading] = useState(false);
+ 
   const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter();
 
@@ -125,7 +125,7 @@ function Login() {
             onClick={handleGoogleLogin}
             disabled={loading}
           ><FcGoogle className='h-6 w-6 mr-2' /><span>Login with Google</span></button> */}
-          <p className='my-3'>Don't Have account?<span className='text-[#4275f7] font-medium underline cursor-pointer'>
+          <p className='my-3'>Don&apos;t Have account?<span className='text-[#4275f7] font-medium underline cursor-pointer'>
             <Link href='/auth/signup'>SignUp</Link></span></p>
         </div>
       </div>
