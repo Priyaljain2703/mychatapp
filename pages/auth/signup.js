@@ -8,6 +8,7 @@ import { ref, set, get } from 'firebase/database';
 
 import { useRouter } from "next/router";
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import Image from 'next/image';
 // import { FcGoogle } from 'react-icons/fc';
 
 function Signup() {
@@ -184,15 +185,15 @@ function Signup() {
 
       <div className='flex bg-[#fff] min-w-[40vw] min-h-[30vw] justify-center rounded-2xl shadow-lg'>
         <div className='flex flex-col items-center justify-center'>
-          <img src="../../login.svg" className='h-35 w-35 ' />
+          <Image src="../../login.svg" className='h-35 w-35 ' width={35} height={35} />
           <form action="" className='flex flex-col gap-3' onSubmit={formSubmit}>
 
-            <p className='text-2xl font-semibold text-center'>Signup page</p>
+            <p className='text-2xl text-[#1a1a1a] font-semibold text-center'>Signup page</p>
             <input
               type="text"
               placeholder="Username"
               onChange={(e) => checkUsernameAvailability(e.target.value)}
-              className='border-2 p-1.5 rounded-lg pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-gray-600 w-75'
+              className='border-2 p-1.5 rounded-lg pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-[##2e2e2e] w-75'
             />
 
             <input
@@ -200,21 +201,21 @@ function Signup() {
 
               placeholder='Email'
               onChange={(e) => setEmail(e.target.value)}
-              className='border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-gray-600 '
+              className='border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-[##2e2e2e] '
             />
             <input
               type="password"
 
               placeholder='Password'
               onChange={handlePasswordChange}
-              className='border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-gray-600 '
+              className='border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-[##2e2e2e] '
             />
             <div className="relative w-full">
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder='Confirm Password'
                 onChange={handelconfirmPassword}
-                className='border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-gray-600 '
+                className='border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-[#2e2e2e] '
               />
               <button
                 type='button'
@@ -247,7 +248,7 @@ function Signup() {
 
            
           </form>
-           <p className='my-3'>Already Have account?<span className='text-[#4275f7] font-medium underline cursor-pointer'
+           <p className='my-3 text-[#1a1a1a]'>Already Have account?<span className='text-[#4275f7] font-medium underline cursor-pointer'
             ><Link href='/'>Login</Link></span></p>
         </div>
 

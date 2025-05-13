@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { auth } from '../../firebase';
 import { useRouter } from "next/router";
+import Image from 'next/image';
 
 // import { FcGoogle } from 'react-icons/fc';
 
@@ -75,8 +76,8 @@ function Login() {
 
         <div className='flex flex-col items-center justify-center '>
           
-            <img src="login.svg" className='h-35 w-35 mt-[-30px]' />
-          <p className='text-2xl font-semibold m-2'>Login page</p>
+            <Image src="login.svg" className='h-35 w-35 mt-[-30px]' width={35} height={35} />
+          <p className='text-2xl font-semibold m-2 text-[#1a1a1a]'>Login page</p>
        
           
           <form action="" className='flex flex-col'
@@ -86,14 +87,14 @@ function Login() {
             <input
               type="email"
               placeholder='Email'
-              className='border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-gray-600 m-2'
+              className='border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-[##2e2e2e] m-2'
               onChange={(e) => setEmail(e.target.value)}
             />
             <div className="relative w-75">
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
-                className="border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-gray-600 m-2"
+                className="border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-[##2e2e2e] m-2"
                 onChange={(e) => setPassword(e.target.value)}
               />
 
@@ -125,7 +126,7 @@ function Login() {
             onClick={handleGoogleLogin}
             disabled={loading}
           ><FcGoogle className='h-6 w-6 mr-2' /><span>Login with Google</span></button> */}
-          <p className='my-3'>Don&apos;t Have account?<span className='text-[#4275f7] font-medium underline cursor-pointer'>
+          <p className='my-3 text-[#1a1a1a]'>Don&apos;t Have account?<span className='text-[#4275f7] font-medium underline cursor-pointer'>
             <Link href='/auth/signup'>SignUp</Link></span></p>
         </div>
       </div>
