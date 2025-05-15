@@ -53,7 +53,7 @@ function AllUsers() {
   }, [currentUser]);
 
   return (
-    <div className="w-[25vw] border-r-2 border-[#dcdcdc] bg-[#fff] overflow-y-auto">
+    <div className="w-full sm:w-[25vw] border-r-2 border-[#dcdcdc] bg-white overflow-y-auto">
       <h2 className="text-[16px] font-semibold m-2">Messages</h2>
       <ul>
         {users.map((user, index) => (

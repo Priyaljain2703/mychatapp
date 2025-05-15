@@ -103,7 +103,7 @@ const GeneralChat = () => {
   };
 
   return (
-    <div className='w-full h-full flex flex-col'>
+    <div className='w-full h-full flex flex-col '>
       <h1 className='p-3 border-b-2 border-[#dcdcdc] font-semibold text-[#4d4d4d]'>General Chat</h1>
 
       <div

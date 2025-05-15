@@ -15,7 +15,8 @@ function Navbar() {
     }
   
     return (
-    <div className="relative justify-between items-center p-4 border-[#dbd9d9] border-r-2 w-[5vw] ">
+    <div className="hidden sm:block relative justify-between items-center p-4 border-[#dbd9d9] border-r-2 w-[5vw]">
+
       <button onClick={handleChat} className='hover:bg-[#efefef] p-1.5 rounded-full focus:bg-[#e8f8ff] focus:outline-none focus:ring-2 focus:ring-[#e2e2e2]  '>
         <Image src="/Group.svg" alt="Logo" width={6} height={6} className="h-5 w-5" />
       </button>

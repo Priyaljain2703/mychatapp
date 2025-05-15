@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import Navbar from "../../components/Navbar";
 import AllUsers from "../../components/AllUsers";
 import "../../src/app/globals.css";
+import Image from "next/image";
 
 export default function Chat() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function Chat() {
   const [editedText, setEditedText] = useState("");
   const [selectedMessageKey, setSelectedMessageKey] = useState(null);
 
- 
+
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function Chat() {
     });
   }, [username, currentUser]);
 
- 
+
   const getChatId = (user1, user2) => {
     return [user1, user2].sort().join("_");
   };
@@ -76,7 +77,9 @@ export default function Chat() {
 
     setMessageInput("");
   };
-
+   const handleBack =()=>{
+    router.back();
+   }
 
   const deleteMessage = (key) => {
     const chatId = getChatId(currentUser.displayName, username);
@@ -90,7 +93,7 @@ export default function Chat() {
     setEditedText(currentText);
   };
 
-  
+
   const saveEditedMessage = (key) => {
     if (!editedText.trim()) return;
     const chatId = getChatId(currentUser.displayName, username);
@@ -101,9 +104,9 @@ export default function Chat() {
     setEditedText("");
   };
 
-  
+
   useEffect(() => {
-    
+
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "auto", block: "end" });
     }
@@ -111,14 +114,23 @@ export default function Chat() {
 
   return (
     <div className="h-screen w-full flex items-center justify-center bg-gradient-to-tl to-[#a2c0db] from-[#eab9da]">
-      <div className="flex bg-[#fff] w-[96vw] h-[42vw] rounded-sm shadow-lg">
+      <div className="flex bg-white w-[96vw] h-[95vh] sm:h-[50vh] md:h-[45vh] lg:h-[42vw] rounded-sm shadow-lg">
         <Navbar />
-        <AllUsers />
-        <div className="w-full">
-          <h2 className="p-3 border-b-2 border-[#dcdcdc] font-semibold text-[#4d4d4d]">
-            Chat with {username}
-          </h2>
-          <div className="flex flex-col space-y-4 overflow-y-auto flex-grow px-4 h-[35vw] pt-3">
+        <div className="hidden sm:flex sm:w-[25vw] sm:border-r border-gray-200 overflow-y-auto sm:max-h-full">
+          <AllUsers />
+        </div>
+        <div className="flex flex-col flex-grow w-full">
+          <div className="flex border-b-2 border-gray-300 ">
+            <button onClick={handleBack}>
+              <Image src={'/back.svg'} width={18} height={18} className="lg:hidden ml-2" />
+            </button>
+            
+            <h2 className="p-3 font-semibold text-[#4d4d4d]">
+              Chat with {username}
+            </h2>
+          </div>
+
+          <div className="flex flex-col flex-grow space-y-4 overflow-y-auto px-4 py-3 min-h-[40vh] max-h-[85vh] sm:min-h-[45vh] sm:max-h-[80vh] md:min-h-[50vh] md:max-h-[85vh]">
             {messages.map((msg, i) => {
               const isSender = msg.sender === currentUser?.displayName;
               const isSelected = selectedMessageKey === msg.key;
@@ -173,7 +185,7 @@ export default function Chat() {
                 </div>
               );
             })}
-           
+
             <div ref={messagesEndRef} />
           </div>
 
@@ -195,6 +207,7 @@ export default function Chat() {
               type="submit"
               className="ml-3 bg-[#47718a] text-white py-2 px-4 rounded-lg hover:bg-[#6a8da1] focus:outline-none focus:ring-2"
             >
+
               Send
             </button>
           </form>
