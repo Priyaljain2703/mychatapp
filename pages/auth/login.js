@@ -1,20 +1,17 @@
-import React, { useState } from 'react'
-import '../../src/app/globals.css'
+import React, { useState } from 'react';
+import '../../src/app/globals.css';
 import Link from 'next/link';
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { auth } from '../../firebase';
 import { useRouter } from "next/router";
 import Image from 'next/image';
-
-// import { FcGoogle } from 'react-icons/fc';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
- 
   const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter();
 
@@ -33,11 +30,9 @@ function Login() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-
       setErrorMessage('');
       setSuccessMessage('User logged in successfully');
       router.push('/homepage');
-
     } catch (err) {
       console.log(err);
       if (err.code === 'auth/user-not-found') {
@@ -45,7 +40,7 @@ function Login() {
       } else if (err.code === 'auth/wrong-password') {
         setErrorMessage('Incorrect password. Please try again.');
       } else if (err.code === 'auth/invalid-credential') {
-        setErrorMessage('Enter you email and password correctly');
+        setErrorMessage('Enter your email and password correctly');
       } else {
         setErrorMessage('An error occurred. Please try again later.');
       }
@@ -53,55 +48,36 @@ function Login() {
     }
   };
 
-  // const provider = new GoogleAuthProvider();
-  // const handleGoogleLogin = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const result = await signInWithPopup(auth, provider);
-  //     const user = result.user;
-  //     console.log(`${user.email} logged in successfully`);
-  //   } catch (err) {
-  //     console.log(err);
-  //     setErrorMessage('Google login failed');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gradient-to-tl to-[#a2c0db] from-[#eab9da] '>
+    <div className='min-h-screen flex items-center justify-center bg-gradient-to-tl to-[#a2c0db] from-[#eab9da] px-4'>
+      <div className='w-full max-w-md bg-white p-6 md:p-10 rounded-2xl shadow-lg'>
+        <div className='w-full'>
+          <div className='flex justify-center '>
+            <Image src="/login.svg" alt="Login Illustration" width={150} height={150} className='' />
+          </div>
 
-      <div className=' flex bg-[#fff] min-w-[40vw] min-h-[28vw] justify-center rounded-2xl shadow-lg'>
+          <p className='text-2xl text-center font-semibold text-[#1a1a1a] '>Login Page</p>
 
-        <div className='flex flex-col items-center justify-center '>
-          
-            <Image src="login.svg" className='h-35 w-35 mt-[-30px]' width={35} height={35} />
-          <p className='text-2xl font-semibold m-2 text-[#1a1a1a]'>Login page</p>
-       
-          
-          <form action="" className='flex flex-col'
-            onSubmit={handleFormSubmit}
-          >
-
-            <input
-              type="email"
-              placeholder='Email'
-              className='border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-[##2e2e2e] m-2'
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <div className="relative w-75">
+          <form onSubmit={handleFormSubmit} className='flex flex-col '>
+            <div className="flex justify-center m-2 w-full max-w-sm mx-auto ">
+              <input
+                type="email"
+                placeholder="Email"
+                className="border-2 p-2 rounded-lg w-full border-gray-300 font-medium text-[#262626] focus:outline-none focus:border-[#414141] "
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="relative m-2 w-full max-w-sm mx-auto">
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
-                className="border-2 p-1.5 rounded-lg w-full pr-10 border-gray-300 font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:text-[##2e2e2e] m-2"
+                className="border-2 p-2 rounded-lg w-full border-gray-300 font-medium text-[#262626] focus:outline-none focus:border-[#414141] "
                 onChange={(e) => setPassword(e.target.value)}
               />
-
               <button
-                type='button'
+                type="button"
                 onClick={passwordVisibility}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2"
               >
                 {showPassword ? (
                   <AiOutlineEye className="w-5 h-5 text-gray-600" />
@@ -111,29 +87,28 @@ function Login() {
               </button>
             </div>
 
-            {errorMessage && <p className='text-red-500 text-sm'>{errorMessage}</p>}
-            {successMessage && <p className='text-green-700'>{successMessage}</p>}
 
-            <button type="submit"
-              className='bg-[#2972e9] py-2 text-white px-4 rounded-full cursor-pointer m-2'
+            {errorMessage && <p className='text-red-500 text-sm  mt-1'>{errorMessage}</p>}
+            {successMessage && <p className='text-green-600 text-sm  mt-1'>{successMessage}</p>}
+
+            <button
+              type="submit"
+              className='bg-[#2972e9] w-full max-w-sm mx-auto py-2 text-white px-4 rounded-full m-2 hover:bg-[#225dcc] transition-colors'
             >
               Login
             </button>
           </form>
-          {/* <p>OR</p>
-          <button
-            className='bg-[#fdfeff] py-2 border-2 border-[#ababab] px-4 flex rounded-full shadow-2xs cursor-pointer'
-            onClick={handleGoogleLogin}
-            disabled={loading}
-          ><FcGoogle className='h-6 w-6 mr-2' /><span>Login with Google</span></button> */}
-          <p className='my-3 text-[#1a1a1a]'>Don&apos;t Have account?<span className='text-[#4275f7] font-medium underline cursor-pointer'>
-            <Link href='/auth/signup'>SignUp</Link></span></p>
+
+          <p className='text-center mt-4 text-[#1a1a1a] text-sm'>
+            Don&apos;t have an account?{' '}
+            <Link href='/auth/signup' className='text-[#4275f7] font-medium underline'>
+              Sign Up
+            </Link>
+          </p>
         </div>
       </div>
-
-
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
