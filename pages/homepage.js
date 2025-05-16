@@ -31,7 +31,7 @@ function Homepage() {
         )}
       </div>
 
-      <div className="sm:hidden w-[20vw] fixed top-9 right-2   border-t border-gray-300 flex justify-around py-3 ">
+      <div className="sm:hidden w-[20vw] fixed top-9 right-2  flex justify-around py-3 ">
         <button
           className="text-sm font-medium text-blue-600"
           onClick={() => setShowChat(prev => !prev)}
