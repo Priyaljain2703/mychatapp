@@ -114,7 +114,7 @@ export default function Chat() {
 
   return (
     <div className="h-screen w-full flex items-center justify-center bg-gradient-to-tl to-[#a2c0db] from-[#eab9da]">
-      <div className="flex bg-white w-[96vw] h-[95vh] sm:h-[50vh] md:h-[45vh] lg:h-[42vw] rounded-sm shadow-lg">
+      <div className="flex bg-white w-[96vw] h-[92vh] sm:h-[50vh] md:h-[45vh] lg:h-[42vw] rounded-sm shadow-lg">
         <Navbar />
         <div className="hidden sm:flex sm:w-[25vw] sm:border-r border-gray-200 overflow-y-auto sm:max-h-full">
           <AllUsers />
