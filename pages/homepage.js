@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image'
 
 
+
 function Homepage() {
   const [showChat, setShowChat] = useState(false);
   const router = useRouter();
@@ -16,10 +17,10 @@ function Homepage() {
 
   return (
     <div className='h-screen w-full flex items-center justify-center bg-gradient-to-tl to-[#a2c0db] from-[#eab9da]'>
-      <div className="flex bg-white w-[96vw] h-[92vh] sm:h-[50vh] md:h-[45vh] lg:h-[42vw] rounded-sm shadow-lg">
+      <div className="flex bg-white w-[96vw] h-[92vh] sm:h-[50vh] md:h-[45vh] lg:h-[43vw] rounded-sm shadow-lg">
         <Navbar />
         {!showChat && <AllUsers className="flex sm:hidden" />}
-
+    
 
         <div className='hidden sm:flex w-full h-full flex flex-col'>
           <GeneralChat />
@@ -56,6 +57,7 @@ function Homepage() {
             quality={100}
             priority />
         </button>
+
       </div>
 
 

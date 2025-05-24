@@ -1,12 +1,9 @@
-// Import the functions you need from the SDKs you need
+
 import { initializeApp, getApps } from "firebase/app";
 import {  getDatabase, ref, set, get, child, query, orderByChild, equalTo } from 'firebase/database';
-import { getAuth } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getStorage } from "firebase/storage";
+import { getAuth ,updateProfile} from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDCoullLDc4G1b2_vxqMU4eTqStT8psXbI",
   authDomain: "myrealtimechatapp-29fec.firebaseapp.com",
@@ -23,4 +20,5 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 
 const auth = getAuth(app);
  const database = getDatabase(app);
-export { auth,database, ref, set, get, child, query, orderByChild, equalTo};
+ const storage = getStorage(app);
+export { auth,database, ref, set, get, child, query, orderByChild, equalTo ,storage,updateProfile};

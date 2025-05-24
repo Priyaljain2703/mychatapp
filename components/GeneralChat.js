@@ -37,7 +37,7 @@ const GeneralChat = () => {
   useEffect(() => {
     const currentUser = auth.currentUser;
     if (!currentUser) {
-      router.push('/');
+      <p>Loadiing......</p>
     } else {
       setUser(currentUser);
     }

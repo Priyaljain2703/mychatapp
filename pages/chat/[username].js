@@ -17,6 +17,7 @@ export default function Chat() {
   const [editingKey, setEditingKey] = useState(null);
   const [editedText, setEditedText] = useState("");
   const [selectedMessageKey, setSelectedMessageKey] = useState(null);
+const [chatUserProfile, setChatUserProfile] = useState(null);
 
 
   const messagesEndRef = useRef(null);
@@ -31,7 +32,15 @@ export default function Chat() {
 
   useEffect(() => {
     if (!username || !currentUser) return;
-
+const chatUserRef = ref(database, `users/${username}`);
+onValue(chatUserRef, (snapshot) => {
+  const data = snapshot.val();
+  if (data && data.profileImage) {
+    setChatUserProfile(data.profileImage);
+  } else {
+    setChatUserProfile('/default-avatar.png'); // fallback
+  }
+});
     const chatId = getChatId(currentUser.displayName, username);
     const messagesRef = ref(database, `PersonalChats/${chatId}`);
 
@@ -77,9 +86,9 @@ export default function Chat() {
 
     setMessageInput("");
   };
-   const handleBack =()=>{
+  const handleBack = () => {
     router.back();
-   }
+  }
 
   const deleteMessage = (key) => {
     const chatId = getChatId(currentUser.displayName, username);
@@ -114,7 +123,7 @@ export default function Chat() {
 
   return (
     <div className="h-screen w-full flex items-center justify-center bg-gradient-to-tl to-[#a2c0db] from-[#eab9da]">
-      <div className="flex bg-white w-[96vw] h-[92vh] sm:h-[50vh] md:h-[45vh] lg:h-[42vw] rounded-sm shadow-lg">
+      <div className="flex bg-white w-[96vw] h-[92vh] sm:h-[50vh] md:h-[45vh] lg:h-[43vw] rounded-sm shadow-lg">
         <Navbar />
         <div className="hidden sm:flex sm:w-[25vw] sm:border-r border-gray-200 overflow-y-auto sm:max-h-full">
           <AllUsers />
@@ -124,10 +133,13 @@ export default function Chat() {
             <button onClick={handleBack}>
               <Image src={'/back.svg'} width={18} height={18} className="lg:hidden ml-2" />
             </button>
-            
-            <h2 className="p-3 font-semibold text-[#4d4d4d]">
-              Chat with {username}
-            </h2>
+            <div className="flex">
+              <img src={chatUserProfile} alt="profile" className="w-8 h-8 rounded-full border-2 border-[#8e8e8e] ml-2 mt-2" />
+              <h2 className="py-3 px-2 font-semibold text-[#4d4d4d]">
+                Chat with {username}
+              </h2>
+            </div>
+
           </div>
 
           <div className="flex flex-col flex-grow space-y-4 overflow-y-auto px-4 py-3 min-h-[40vh] max-h-[85vh] sm:min-h-[45vh] sm:max-h-[80vh] md:min-h-[50vh] md:max-h-[85vh]">

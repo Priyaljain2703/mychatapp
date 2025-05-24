@@ -1,41 +1,64 @@
+
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { auth } from '../firebase';
 import { useRouter } from 'next/router';
-import React from 'react'
-import '../src/app/globals.css'
+import ProfilePopup from '../pages/editProfile';
+
 
 function Navbar() {
+  const [user, setUser] = useState(null);
+  const [showProfile, setShowProfile] = useState(false);
+  const router = useRouter();
 
-  const router =useRouter();
-  
+  useEffect(() => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setUser(currentUser);
+    } else {
+      router.push('/login');
+    }
+  }, []);
+
   const handleLogout = () => {
-      router.push('/');
-    }
-    const handleChat = () => {
-      router.push('/homepage');
-    }
-  
-    return (
-    <div className="hidden sm:block relative justify-between items-center p-4 border-[#dbd9d9] border-r-2 w-[5vw]">
+    router.push('/');
+  };
 
-      <button onClick={handleChat} className='hover:bg-[#efefef] p-1.5 rounded-full focus:bg-[#e8f8ff] focus:outline-none focus:ring-2 focus:ring-[#e2e2e2]  '>
-        <Image src="/Group.svg" alt="Logo" width={6} height={6} className="h-5 w-5" />
-      </button>
-      <div className=" flex flex-col space-x-4  my-4">
-
-        {/* <button className="my-4">
-          <img src="/profile.jpg" alt="Profile" className="h-8 w-8 rounded-full" />
-        </button> */}
-
-        <button 
-        className="mx-2"
-        onClick={handleLogout}
+  return (
+    <>
+      <div className="hidden sm:flex flex-col items-center h-full border-r-2 border-[#dcdcdc] w-[5vw] py-2">
+       
+        <button
+          onClick={() => router.push('/homepage')}
+          className="hover:bg-gray-200 rounded-full p-2   "
         >
-          <Image src='/logout.svg' className='w-10 h-10' width={6} height={6} />
+          <Image src="/Group.svg" alt="Chat" width={24} height={24} />
+        </button>
+
+        
+        <button
+          onClick={() => setShowProfile(true)}
+          className="rounded-full m-2 border-2 border-[#696969]"
+        >
+          <img
+            src={user?.photoURL || '/default-avatar.png'}
+            alt="Profile"
+            className="h-7 w-7 rounded-full object-cover"
+          />
+        </button>
+
+       
+        <button onClick={handleLogout} className="p-2 m-1">
+          <Image src="/logout.svg" alt="logout" width={22} height={22} />
         </button>
       </div>
-    </div>
+
+     
+      {showProfile && (
+        <ProfilePopup user={user} onClose={() => setShowProfile(false)} />
+      )}
+    </>
   );
 }
 
-
-export default Navbar
+export default Navbar;
