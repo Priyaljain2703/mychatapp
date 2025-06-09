@@ -8,6 +8,7 @@ import {
   getDownloadURL
 } from 'firebase/storage';
 import { auth, database, updateProfile } from '../firebase';
+import '../src/app/globals.css'
 
 function UserInfo() {
   const router = useRouter();
