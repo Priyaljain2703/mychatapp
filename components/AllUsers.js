@@ -62,7 +62,7 @@ function AllUsers() {
           <li key={index} className="hover:bg-[#ededed] m-2 border rounded-sm border-[#dcdcdc] bg-[#f8f7f7]">
             <Link href={`/chat/${encodeURIComponent(user.username)}`}>
               <div className="flex gap-2 items-center px-2">
-                <img src={user.profileImage} alt="profile "  width={43} height={43} className="rounded-full border-2 border-[#858585]" />
+                <img src={user.profileImage} alt="profile "  width={43} height={43} className="rounded-full border-2 border-[#858585] object-cover h-11 w-11 " />
                 <div className="py-1">
                   <p className="cursor-pointer hover:underline font-semibold text-[#3f3f3f]">
                     {user.username}
